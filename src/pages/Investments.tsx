@@ -1,12 +1,12 @@
 import React from "react";
-import { useBanking } from "@/contexts/BankingContext";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus, TrendingUp, TrendingDown, BarChart3, PieChart, LineChart, DollarSign } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useBanking } from "../contexts/BankingContext";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { TrendingUp, TrendingDown, BarChart3, PieChart, LineChart, DollarSign } from "lucide-react";
+import { formatCurrency } from "../lib/utils";
+import NewInvestmentDialog from "../components/NewInvestmentDialog";
 
 const Investments = () => {
-  const { investments } = useBanking();
+  const { investments, addInvestment } = useBanking();
 
   // Calculate total portfolio value
   const totalPortfolioValue = investments.reduce((sum, inv) => sum + inv.value, 0);
@@ -37,10 +37,7 @@ const Investments = () => {
           <h1 className="text-3xl font-bold">Investments</h1>
           <p className="text-muted-foreground">Manage your investment portfolio</p>
         </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          New Investment
-        </Button>
+        <NewInvestmentDialog onSubmit={addInvestment} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

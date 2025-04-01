@@ -181,9 +181,10 @@ const Index = () => {
             </div>
             <div>
               <h4 className="font-semibold mb-4">Contact</h4>
-              <p className="text-bank-accent/80">123 Banking Street</p>
-              <p className="text-bank-accent/80">New York, NY 10001</p>
-              <p className="text-bank-accent/80">support@testimbank.com</p>
+              <div className="flex flex-col items-center space-y-2">
+                <p className="text-bank-accent/80">support@testimbank.com</p>
+                <p className="text-bank-accent/80">1-800-TESTIMBANK</p>
+              </div>
             </div>
           </div>
           <div className="border-t border-bank-light/20 mt-8 pt-8 text-center text-bank-accent/60">

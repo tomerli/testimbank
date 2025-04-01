@@ -54,6 +54,19 @@ interface Investment {
   performance: number; // percentage
 }
 
+interface LoanApplication {
+  id: string;
+  userId: string;
+  type: "personal" | "auto" | "student" | "mortgage";
+  amount: number;
+  term: number;
+  purpose: string;
+  monthlyIncome: number;
+  employmentStatus: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: Date;
+}
+
 interface BankingContextType {
   accounts: Account[];
   transactions: Transaction[];
@@ -62,6 +75,9 @@ interface BankingContextType {
   investments: Investment[];
   totalBalance: number;
   makeTransfer: (fromAccountId: string, toAccountId: string, amount: number, description: string) => void;
+  addInvestment: (investment: Omit<Investment, "id">) => void;
+  loanApplications: LoanApplication[];
+  applyForLoan: (application: Omit<LoanApplication, "id" | "userId" | "status" | "createdAt">) => void;
 }
 
 // Create context
@@ -73,6 +89,9 @@ const BankingContext = createContext<BankingContextType>({
   investments: [],
   totalBalance: 0,
   makeTransfer: () => {},
+  addInvestment: () => {},
+  loanApplications: [],
+  applyForLoan: () => {},
 });
 
 // Sample data based on user ID
@@ -386,6 +405,7 @@ export const BankingProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [creditCards, setCreditCards] = useState<CreditCard[]>([]);
   const [loans, setLoans] = useState<Loan[]>([]);
   const [investments, setInvestments] = useState<Investment[]>([]);
+  const [loanApplications, setLoanApplications] = useState<LoanApplication[]>([]);
 
   // Load user data when authenticated
   useEffect(() => {
@@ -460,18 +480,44 @@ export const BankingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setTransactions(prev => [fromTransaction, toTransaction, ...prev]);
   };
 
+  const addInvestment = (investment: Omit<Investment, "id">) => {
+    if (!user) return;
+    const newInvestment: Investment = {
+      ...investment,
+      id: `${user.id}-inv${investments.length + 1}`,
+    };
+    setInvestments((prev) => [...prev, newInvestment]);
+  };
+
+  const applyForLoan = (application: Omit<LoanApplication, "id" | "userId" | "status" | "createdAt">) => {
+    if (!user) return;
+
+    const newApplication: LoanApplication = {
+      ...application,
+      id: `loan-${Date.now()}`,
+      userId: user.id,
+      status: "pending",
+      createdAt: new Date(),
+    };
+
+    setLoanApplications((prev) => [...prev, newApplication]);
+  };
+
+  const value = {
+    accounts,
+    transactions,
+    creditCards,
+    loans,
+    investments,
+    totalBalance,
+    makeTransfer,
+    addInvestment,
+    loanApplications,
+    applyForLoan,
+  };
+
   return (
-    <BankingContext.Provider
-      value={{
-        accounts,
-        transactions,
-        creditCards,
-        loans,
-        investments,
-        totalBalance,
-        makeTransfer,
-      }}
-    >
+    <BankingContext.Provider value={value}>
       {children}
     </BankingContext.Provider>
   );
