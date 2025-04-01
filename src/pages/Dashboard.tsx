@@ -54,7 +54,7 @@ const Dashboard = () => {
           <CardContent>
             <div className="text-2xl font-bold">
               {formatCurrency(
-                creditCards.reduce((sum, card) => sum + card.availableCredit, 0)
+                creditCards.reduce((sum, card) => sum + (card.creditLimit - card.balance), 0)
               )}
             </div>
             <p className="text-xs text-muted-foreground">

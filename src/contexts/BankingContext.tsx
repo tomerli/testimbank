@@ -2,13 +2,15 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 
 // Define types
-interface Account {
+export interface Account {
   id: string;
   name: string;
-  type: "checking" | "savings" | "investment";
+  type: "checking" | "savings" | "investment" | "credit";
   balance: number;
   currency: string;
   accountNumber: string;
+  creditLimit?: number;
+  transactions: Transaction[];
 }
 
 interface Transaction {
@@ -24,10 +26,12 @@ interface Transaction {
 interface CreditCard {
   id: string;
   name: string;
-  number: string;
+  type: "visa" | "mastercard" | "amex";
+  cardNumber: string;
   expiryDate: string;
-  availableCredit: number;
-  totalLimit: number;
+  balance: number;
+  creditLimit: number;
+  transactions: Transaction[];
 }
 
 interface Loan {
@@ -75,35 +79,49 @@ const BankingContext = createContext<BankingContextType>({
 const getUserAccounts = (userId: string): Account[] => [
   {
     id: `${userId}-acc1`,
-    name: "Everyday Checking",
+    name: "Main Checking",
     type: "checking",
-    balance: 4250.75,
+    balance: 5000,
     currency: "USD",
     accountNumber: "****4321",
+    transactions: [],
   },
   {
     id: `${userId}-acc2`,
-    name: "Emergency Savings",
+    name: "Savings",
     type: "savings",
-    balance: 12680.50,
+    balance: 15000,
     currency: "USD",
     accountNumber: "****6789",
+    transactions: [],
   },
   {
     id: `${userId}-acc3`,
-    name: "Business Checking",
-    type: "checking",
-    balance: 8500.25,
+    name: "Investment Portfolio",
+    type: "investment",
+    balance: 25000,
     currency: "USD",
     accountNumber: "****5432",
+    transactions: [],
   },
   {
     id: `${userId}-acc4`,
-    name: "Vacation Fund",
-    type: "savings",
-    balance: 3500.00,
+    name: "Business Account",
+    type: "checking",
+    balance: 8000,
     currency: "USD",
     accountNumber: "****8765",
+    transactions: [],
+  },
+  {
+    id: `${userId}-acc5`,
+    name: "Premium Credit Card",
+    type: "credit",
+    balance: 2500,
+    currency: "USD",
+    accountNumber: "****9876",
+    creditLimit: 10000,
+    transactions: [],
   },
 ];
 
@@ -159,26 +177,116 @@ const getUserCreditCards = (userId: string): CreditCard[] => [
   {
     id: `${userId}-cc1`,
     name: "TestimBank Business Elite",
-    number: "****5678",
+    type: "visa",
+    cardNumber: "****5678",
     expiryDate: "09/26",
-    availableCredit: 15000,
-    totalLimit: 20000,
+    balance: 15000,
+    creditLimit: 20000,
+    transactions: [
+      {
+        id: `${userId}-cc1-tr1`,
+        accountId: `${userId}-cc1`,
+        amount: -2500.00,
+        type: "payment",
+        description: "Office Equipment Purchase",
+        date: "2024-03-15",
+        category: "Business",
+      },
+      {
+        id: `${userId}-cc1-tr2`,
+        accountId: `${userId}-cc1`,
+        amount: -850.00,
+        type: "payment",
+        description: "Business Conference Tickets",
+        date: "2024-03-14",
+        category: "Travel",
+      },
+      {
+        id: `${userId}-cc1-tr3`,
+        accountId: `${userId}-cc1`,
+        amount: -1200.00,
+        type: "payment",
+        description: "Client Dinner",
+        date: "2024-03-13",
+        category: "Entertainment",
+      },
+    ],
   },
   {
     id: `${userId}-cc2`,
     name: "TestimBank Travel Rewards",
-    number: "****1234",
+    type: "mastercard",
+    cardNumber: "****1234",
     expiryDate: "11/25",
-    availableCredit: 7800,
-    totalLimit: 10000,
+    balance: 7800,
+    creditLimit: 10000,
+    transactions: [
+      {
+        id: `${userId}-cc2-tr1`,
+        accountId: `${userId}-cc2`,
+        amount: -1200.00,
+        type: "payment",
+        description: "Hotel Booking - Paris",
+        date: "2024-03-15",
+        category: "Travel",
+      },
+      {
+        id: `${userId}-cc2-tr2`,
+        accountId: `${userId}-cc2`,
+        amount: -450.00,
+        type: "payment",
+        description: "Airline Tickets",
+        date: "2024-03-14",
+        category: "Travel",
+      },
+      {
+        id: `${userId}-cc2-tr3`,
+        accountId: `${userId}-cc2`,
+        amount: -150.00,
+        type: "payment",
+        description: "Travel Insurance",
+        date: "2024-03-13",
+        category: "Insurance",
+      },
+    ],
   },
   {
     id: `${userId}-cc3`,
     name: "TestimBank Cash Back",
-    number: "****9012",
+    type: "amex",
+    cardNumber: "****9012",
     expiryDate: "03/25",
-    availableCredit: 3500,
-    totalLimit: 5000,
+    balance: 3500,
+    creditLimit: 5000,
+    transactions: [
+      {
+        id: `${userId}-cc3-tr1`,
+        accountId: `${userId}-cc3`,
+        amount: -250.00,
+        type: "payment",
+        description: "Grocery Shopping",
+        date: "2024-03-15",
+        category: "Groceries",
+      },
+      {
+        id: `${userId}-cc3-tr2`,
+        accountId: `${userId}-cc3`,
+        amount: -180.00,
+        type: "payment",
+        description: "Gas Station",
+        date: "2024-03-14",
+        category: "Transportation",
+      },
+      {
+        id: `${userId}-cc3-tr3`,
+        accountId: `${userId}-cc3`,
+        amount: -120.00,
+        type: "payment",
+        description: "Online Shopping",
+        date: "2024-03-13",
+        category: "Shopping",
+      },
+    ],
   },
 ];
 

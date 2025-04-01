@@ -1,120 +1,174 @@
-
 import React from "react";
 import { useBanking } from "@/contexts/BankingContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { LockIcon, CreditCard as CreditCardIcon, Eye, EyeOff } from "lucide-react";
+import { Plus, CreditCard, Lock, Wifi, ChevronRight } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import { toast } from "sonner";
 
 const Cards = () => {
   const { creditCards } = useBanking();
-  const [showCardNumber, setShowCardNumber] = React.useState<Record<string, boolean>>({});
-  
-  const toggleCardNumberVisibility = (cardId: string) => {
-    setShowCardNumber(prev => ({
-      ...prev,
-      [cardId]: !prev[cardId]
-    }));
+
+  // Get card background based on type
+  const getCardBackground = (type: string) => {
+    switch (type) {
+      case "visa":
+        return "bg-gradient-to-br from-blue-600 to-blue-800";
+      case "mastercard":
+        return "bg-gradient-to-br from-orange-500 to-red-600";
+      case "amex":
+        return "bg-gradient-to-br from-green-600 to-green-800";
+      default:
+        return "bg-gradient-to-br from-gray-600 to-gray-800";
+    }
   };
-  
-  const lockCard = (cardId: string) => {
-    toast.success("Card locked successfully");
+
+  // Get card logo based on type
+  const getCardLogo = (type: string) => {
+    switch (type) {
+      case "visa":
+        return "VISA";
+      case "mastercard":
+        return "MASTERCARD";
+      case "amex":
+        return "AMEX";
+      default:
+        return "CARD";
+    }
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <h1 className="text-3xl font-bold">Your Cards</h1>
-      <p className="text-muted-foreground">Manage your credit and debit cards</p>
-      
-      <div className="grid gap-6 md:grid-cols-2">
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold">Credit Cards</h1>
+          <p className="text-muted-foreground">Manage your credit cards and view balances</p>
+        </div>
+        <Button>
+          <Plus className="h-4 w-4 mr-2" />
+          Apply for Card
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {creditCards.map((card) => (
-          <Card key={card.id}>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle>{card.name}</CardTitle>
-                <CreditCardIcon className="h-5 w-5 text-bank" />
-              </div>
-              <CardDescription>Expires {card.expiryDate}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="bank-card-gradient">
-                <div className="flex flex-col h-48 justify-between">
-                  <div className="flex justify-between items-center">
-                    <div className="text-xl font-bold">TestimBank</div>
-                    <div className="text-sm font-light">Credit Card</div>
-                  </div>
-                  
-                  <div className="text-xl tracking-widest font-mono">
-                    {showCardNumber[card.id] 
-                      ? "4387 2349 8723 1290" 
-                      : card.number.padStart(19, "**** **** **** ")}
-                  </div>
-                  
-                  <div className="flex justify-between items-end">
-                    <div>
-                      <div className="text-xs opacity-80">CARD HOLDER</div>
-                      <div>John Doe</div>
-                    </div>
-                    <div>
-                      <div className="text-xs opacity-80">EXPIRES</div>
-                      <div>{card.expiryDate}</div>
-                    </div>
-                    <div className="w-12 h-12 opacity-80">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1.5" />
-                        <circle cx="8" cy="12" r="2" fill="white" />
-                        <circle cx="16" cy="12" r="2" fill="white" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+          <div key={card.id} className="group relative">
+            <div className={`${getCardBackground(card.type)} rounded-2xl p-6 text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}>
+              <div className="flex justify-between items-start mb-8">
+                <div className="text-2xl font-bold">{getCardLogo(card.type)}</div>
+                <Lock className="h-6 w-6 opacity-75" />
               </div>
               
+              <div className="flex items-center mb-8">
+                <div className="h-8 w-12 bg-white/20 rounded mr-4 flex items-center justify-center">
+                  <div className="h-4 w-6 bg-white/40 rounded"></div>
+                </div>
+                <Wifi className="h-6 w-6 opacity-75" />
+              </div>
+
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">Available Credit</span>
-                  <span className="text-sm font-medium">
-                    {formatCurrency(card.availableCredit)} / {formatCurrency(card.totalLimit)}
-                  </span>
+                <div className="text-sm opacity-75">Card Number</div>
+                <div className="text-xl font-mono tracking-wider">{card.cardNumber}</div>
+              </div>
+
+              <div className="flex justify-between items-end mt-8">
+                <div>
+                  <div className="text-sm opacity-75">Expires</div>
+                  <div className="font-mono">{card.expiryDate}</div>
                 </div>
-                <Progress value={(card.availableCredit / card.totalLimit) * 100} />
-                <div className="text-xs text-muted-foreground text-right">
-                  {Math.round((card.availableCredit / card.totalLimit) * 100)}% available
+                <div>
+                  <div className="text-sm opacity-75">Balance</div>
+                  <div className="font-bold">{formatCurrency(card.balance)}</div>
                 </div>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <div className="font-medium">{card.name}</div>
+                  <div className="text-sm text-muted-foreground capitalize">{card.type}</div>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground" />
               </div>
               
-              <div className="flex space-x-2">
-                <Button 
-                  variant="outline" 
-                  className="flex-1"
-                  onClick={() => toggleCardNumberVisibility(card.id)}
-                >
-                  {showCardNumber[card.id] ? (
-                    <>
-                      <EyeOff className="h-4 w-4 mr-2" />
-                      Hide Number
-                    </>
-                  ) : (
-                    <>
-                      <Eye className="h-4 w-4 mr-2" />
-                      Show Number
-                    </>
-                  )}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="flex-1"
-                  onClick={() => lockCard(card.id)}
-                >
-                  <LockIcon className="h-4 w-4 mr-2" />
-                  Lock Card
-                </Button>
+              <div className="flex justify-between items-center text-sm">
+                <div className="text-muted-foreground">Credit Limit</div>
+                <div className="font-medium">{formatCurrency(card.creditLimit)}</div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Transactions</CardTitle>
+            <CardDescription>Your latest card activities</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {creditCards[0]?.transactions.slice(0, 5).map((transaction) => (
+                <div key={transaction.id} className="flex items-center justify-between p-3 rounded-lg border border-border">
+                  <div className="flex items-center">
+                    <div className={`mr-3 p-2 rounded-full ${
+                      transaction.amount > 0 ? "bg-green-100" : "bg-red-100"
+                    }`}>
+                      {transaction.amount > 0 ? (
+                        <CreditCard className="h-4 w-4 text-green-600" />
+                      ) : (
+                        <CreditCard className="h-4 w-4 text-red-600" />
+                      )}
+                    </div>
+                    <div>
+                      <div className="font-medium">{transaction.description}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {transaction.category} • {transaction.date}
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`font-bold ${
+                    transaction.amount > 0 ? "text-green-600" : "text-red-600"
+                  }`}>
+                    {transaction.amount > 0 ? "+" : ""}{formatCurrency(transaction.amount)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Settings</CardTitle>
+            <CardDescription>Manage your card preferences</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border">
+                <div>
+                  <div className="font-medium">Card Lock</div>
+                  <div className="text-sm text-muted-foreground">Temporarily lock your card</div>
+                </div>
+                <Button variant="outline">Lock Card</Button>
+              </div>
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border">
+                <div>
+                  <div className="font-medium">Travel Mode</div>
+                  <div className="text-sm text-muted-foreground">Enable international transactions</div>
+                </div>
+                <Button variant="outline">Enable</Button>
+              </div>
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border">
+                <div>
+                  <div className="font-medium">Card PIN</div>
+                  <div className="text-sm text-muted-foreground">Change your card PIN</div>
+                </div>
+                <Button variant="outline">Change PIN</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

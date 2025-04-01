@@ -18,6 +18,7 @@ import Investments from "./pages/Investments";
 import Loans from "./pages/Loans";
 import Mortgage from "./pages/Mortgage";
 import NotFound from "./pages/NotFound";
+import Accounts from "./pages/Accounts";
 
 // Layout
 import Layout from "./components/Layout";
@@ -42,7 +43,7 @@ const App = () => (
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/transfers" element={<Transfers />} />
-                <Route path="/accounts" element={<Dashboard />} />
+                <Route path="/accounts" element={<Accounts />} />
                 <Route path="/cards" element={<Cards />} />
                 <Route path="/investments" element={<Investments />} />
                 <Route path="/loans" element={<Loans />} />
