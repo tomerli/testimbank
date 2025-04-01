@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -45,27 +43,31 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-muted p-4">
-      <div className="w-full max-w-md animate-fade-in">
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-bank/90 to-bank-dark/90" />
+      </div>
+
+      {/* Content */}
+      <div className="w-full max-w-md animate-fade-in relative z-10 p-4">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-bank">TestimBank</h1>
-          <p className="text-muted-foreground">Experience the Power of AI Banking</p>
+          <h1 className="text-4xl font-bold text-white mb-2">TestimBank</h1>
+          <p className="text-white/90 text-lg">Experience the Power of AI Banking</p>
         </div>
         
-        <Card>
+        <Card className="bg-white/95 backdrop-blur-sm border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle>Create an account</CardTitle>
+            <CardTitle className="text-2xl text-bank">Create an account</CardTitle>
             <CardDescription>Enter your information to get started</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
-              <Alert className="bg-muted border-bank/20">
-                <InfoIcon className="h-4 w-4 text-bank" />
-                <AlertDescription className="text-sm text-muted-foreground">
-                  This is a demo app. Your information will not be stored on any server.
-                </AlertDescription>
-              </Alert>
-              
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label htmlFor="firstName" className="text-sm font-medium">First Name*</label>
@@ -75,6 +77,7 @@ const Register = () => {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
+                    className="border-bank/20 focus:border-bank"
                   />
                 </div>
                 <div className="space-y-2">
@@ -85,6 +88,7 @@ const Register = () => {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
+                    className="border-bank/20 focus:border-bank"
                   />
                 </div>
               </div>
@@ -97,6 +101,7 @@ const Register = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  className="border-bank/20 focus:border-bank"
                 />
               </div>
               <div className="space-y-2">
@@ -107,6 +112,7 @@ const Register = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="border-bank/20 focus:border-bank"
                 />
               </div>
               <div className="space-y-2">
@@ -117,20 +123,22 @@ const Register = () => {
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="border-bank/20 focus:border-bank"
                 />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <Button
                 type="submit"
-                className="w-full bg-bank hover:bg-bank-dark"
+                className="w-full bg-bank hover:bg-bank-dark text-white font-medium transition-colors"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Creating account..." : "Create account"}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <p className="text-sm text-center text-muted-foreground">
                 Already have an account?{" "}
-                <Link to="/login" className="text-bank hover:underline">
+                <Link to="/login" className="text-bank hover:underline font-medium">
                   Sign in
                 </Link>
               </p>

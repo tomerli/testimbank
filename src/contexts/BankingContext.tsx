@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 
@@ -76,7 +75,7 @@ const BankingContext = createContext<BankingContextType>({
 const getUserAccounts = (userId: string): Account[] => [
   {
     id: `${userId}-acc1`,
-    name: "Main Checking",
+    name: "Everyday Checking",
     type: "checking",
     balance: 4250.75,
     currency: "USD",
@@ -84,7 +83,7 @@ const getUserAccounts = (userId: string): Account[] => [
   },
   {
     id: `${userId}-acc2`,
-    name: "Savings",
+    name: "Emergency Savings",
     type: "savings",
     balance: 12680.50,
     currency: "USD",
@@ -92,11 +91,19 @@ const getUserAccounts = (userId: string): Account[] => [
   },
   {
     id: `${userId}-acc3`,
-    name: "Investment Portfolio",
-    type: "investment",
-    balance: 28540.25,
+    name: "Business Checking",
+    type: "checking",
+    balance: 8500.25,
     currency: "USD",
-    accountNumber: "****9876",
+    accountNumber: "****5432",
+  },
+  {
+    id: `${userId}-acc4`,
+    name: "Vacation Fund",
+    type: "savings",
+    balance: 3500.00,
+    currency: "USD",
+    accountNumber: "****8765",
   },
 ];
 
@@ -107,7 +114,7 @@ const getUserTransactions = (userId: string): Transaction[] => [
     amount: -75.50,
     type: "payment",
     description: "Grocery Store",
-    date: "2023-09-15",
+    date: "2024-09-15",
     category: "Groceries",
   },
   {
@@ -116,7 +123,7 @@ const getUserTransactions = (userId: string): Transaction[] => [
     amount: -120.00,
     type: "payment",
     description: "Electric Bill",
-    date: "2023-09-14",
+    date: "2024-09-14",
     category: "Utilities",
   },
   {
@@ -125,25 +132,25 @@ const getUserTransactions = (userId: string): Transaction[] => [
     amount: 1250.00,
     type: "deposit",
     description: "Paycheck",
-    date: "2023-09-10",
+    date: "2024-09-10",
     category: "Income",
   },
   {
     id: `${userId}-tr4`,
-    accountId: `${userId}-acc1`,
-    amount: -45.99,
+    accountId: `${userId}-acc3`,
+    amount: -2500.00,
     type: "payment",
-    description: "Streaming Service",
-    date: "2023-09-08",
-    category: "Entertainment",
+    description: "Office Supplies",
+    date: "2024-09-08",
+    category: "Business",
   },
   {
     id: `${userId}-tr5`,
-    accountId: `${userId}-acc1`,
+    accountId: `${userId}-acc2`,
     amount: -350.00,
     type: "transfer",
-    description: "Transfer to Savings",
-    date: "2023-09-05",
+    description: "Transfer to Vacation Fund",
+    date: "2024-09-05",
     category: "Transfer",
   },
 ];
@@ -151,19 +158,27 @@ const getUserTransactions = (userId: string): Transaction[] => [
 const getUserCreditCards = (userId: string): CreditCard[] => [
   {
     id: `${userId}-cc1`,
-    name: "TestimBank Rewards Platinum",
+    name: "TestimBank Business Elite",
     number: "****5678",
     expiryDate: "09/26",
-    availableCredit: 3500,
-    totalLimit: 5000,
+    availableCredit: 15000,
+    totalLimit: 20000,
   },
   {
     id: `${userId}-cc2`,
-    name: "TestimBank Travel Gold",
+    name: "TestimBank Travel Rewards",
     number: "****1234",
     expiryDate: "11/25",
     availableCredit: 7800,
     totalLimit: 10000,
+  },
+  {
+    id: `${userId}-cc3`,
+    name: "TestimBank Cash Back",
+    number: "****9012",
+    expiryDate: "03/25",
+    availableCredit: 3500,
+    totalLimit: 5000,
   },
 ];
 
@@ -171,37 +186,57 @@ const getUserLoans = (userId: string): Loan[] => [
   {
     id: `${userId}-loan1`,
     type: "mortgage",
-    amount: 250000,
-    remainingAmount: 175000,
+    amount: 450000,
+    remainingAmount: 375000,
     interestRate: 4.5,
-    monthlyPayment: 1267.89,
+    monthlyPayment: 1901.84,
     term: 360,
-    nextPaymentDate: "2023-10-01",
+    nextPaymentDate: "2024-10-01",
   },
   {
     id: `${userId}-loan2`,
+    type: "auto",
+    amount: 35000,
+    remainingAmount: 15000,
+    interestRate: 5.2,
+    monthlyPayment: 662.50,
+    term: 60,
+    nextPaymentDate: "2024-10-15",
+  },
+  {
+    id: `${userId}-loan3`,
+    type: "student",
+    amount: 25000,
+    remainingAmount: 18000,
+    interestRate: 3.8,
+    monthlyPayment: 250.00,
+    term: 120,
+    nextPaymentDate: "2024-10-20",
+  },
+  {
+    id: `${userId}-loan4`,
     type: "personal",
-    amount: 15000,
-    remainingAmount: 5000,
+    amount: 10000,
+    remainingAmount: 3000,
     interestRate: 9.5,
-    monthlyPayment: 375.22,
+    monthlyPayment: 250.22,
     term: 48,
-    nextPaymentDate: "2023-10-15",
+    nextPaymentDate: "2024-10-25",
   },
 ];
 
 const getUserInvestments = (userId: string): Investment[] => [
   {
     id: `${userId}-inv1`,
-    name: "Tech Growth Fund",
-    type: "mutual_fund",
+    name: "Growth Tech Portfolio",
+    type: "stock",
     value: 15250.75,
     initialInvestment: 12000,
     performance: 27.09,
   },
   {
     id: `${userId}-inv2`,
-    name: "S&P 500 ETF",
+    name: "Global Market ETF",
     type: "etf",
     value: 8320.50,
     initialInvestment: 7500,
@@ -209,11 +244,27 @@ const getUserInvestments = (userId: string): Investment[] => [
   },
   {
     id: `${userId}-inv3`,
-    name: "Corporate Bond Fund",
-    type: "bond",
+    name: "Retirement Fund",
+    type: "mutual_fund",
     value: 4969.00,
     initialInvestment: 5000,
     performance: -0.62,
+  },
+  {
+    id: `${userId}-inv4`,
+    name: "Government Bonds",
+    type: "bond",
+    value: 7500.00,
+    initialInvestment: 7000,
+    performance: 7.14,
+  },
+  {
+    id: `${userId}-inv5`,
+    name: "Sustainable Energy ETF",
+    type: "etf",
+    value: 6200.00,
+    initialInvestment: 6000,
+    performance: 3.33,
   },
 ];
 

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Transfers from "./pages/Transfers";
 import Cards from "./pages/Cards";
+import Investments from "./pages/Investments";
+import Loans from "./pages/Loans";
+import Mortgage from "./pages/Mortgage";
 import NotFound from "./pages/NotFound";
 
 // Layout
@@ -42,9 +44,9 @@ const App = () => (
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/accounts" element={<Dashboard />} />
                 <Route path="/cards" element={<Cards />} />
-                <Route path="/investments" element={<Dashboard />} />
-                <Route path="/loans" element={<Dashboard />} />
-                <Route path="/mortgage" element={<Dashboard />} />
+                <Route path="/investments" element={<Investments />} />
+                <Route path="/loans" element={<Loans />} />
+                <Route path="/mortgage" element={<Mortgage />} />
               </Route>
               
               {/* Catch-all route */}

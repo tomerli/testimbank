@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { ArrowRight } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -35,16 +35,27 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-muted p-4">
-      <div className="w-full max-w-md animate-fade-in">
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-bank/90 to-bank-dark/90" />
+      </div>
+
+      {/* Content */}
+      <div className="w-full max-w-md animate-fade-in relative z-10 p-4">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-bank">TestimBank</h1>
-          <p className="text-muted-foreground">Experience the Power of AI Banking</p>
+          <h1 className="text-4xl font-bold text-white mb-2">TestimBank</h1>
+          <p className="text-white/90 text-lg">Experience the Power of AI Banking</p>
         </div>
         
-        <Card>
+        <Card className="bg-white/95 backdrop-blur-sm border-white/20 shadow-xl">
           <CardHeader>
-            <CardTitle>Welcome back</CardTitle>
+            <CardTitle className="text-2xl text-bank">Welcome back</CardTitle>
             <CardDescription>Enter your credentials to access your account</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
@@ -58,6 +69,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  className="border-bank/20 focus:border-bank"
                 />
               </div>
               <div className="space-y-2">
@@ -73,28 +85,25 @@ const Login = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="border-bank/20 focus:border-bank"
                 />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <Button
                 type="submit"
-                className="w-full bg-primary text-white font-medium hover:bg-primary/90"
+                className="w-full bg-bank hover:bg-bank-dark text-white font-medium transition-colors"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Signing in..." : "Sign in"}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <p className="text-sm text-center text-muted-foreground">
                 Don't have an account?{" "}
-                <Link to="/register" className="text-bank hover:underline">
+                <Link to="/register" className="text-bank hover:underline font-medium">
                   Create one
                 </Link>
               </p>
-              <div className="text-xs text-center text-muted-foreground">
-                <p>Demo accounts (optional):</p>
-                <p>Email: john@example.com or jane@example.com</p>
-                <p>Password: any password will work</p>
-              </div>
             </CardFooter>
           </form>
         </Card>

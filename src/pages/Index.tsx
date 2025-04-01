@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Smartphone, PieChart, Lock, CreditCard, BarChart3 } from "lucide-react";
+import { ArrowRight, Shield, Smartphone, PieChart, Lock, CreditCard, BarChart3, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
@@ -9,25 +9,40 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col animate-fade-in">
-      {/* Hero Section */}
-      <header className="bg-gradient-to-r from-bank to-bank-dark text-white py-20 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="md:w-1/2 space-y-6">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+      {/* Hero Section with Background */}
+      <header className="relative min-h-[70vh] flex items-center justify-center overflow-hidden py-12">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-bank/95 to-bank-dark/95" />
+        </div>
+
+        {/* Content */}
+        <div className="container mx-auto max-w-6xl px-6 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="md:w-1/2 space-y-4">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 mb-2">
+                <Sparkles className="h-4 w-4 mr-2" />
+                <span className="text-sm">AI-Powered Banking</span>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight text-white">
                 TestimBank
-                <span className="block text-2xl md:text-3xl mt-2 text-bank-accent">
+                <span className="block text-xl md:text-2xl mt-2 text-bank-accent">
                   Experience the Power of AI Banking
                 </span>
               </h1>
-              <p className="text-lg md:text-xl text-bank-accent/90">
+              <p className="text-base md:text-lg text-white/90">
                 Intelligent solutions for your financial needs. Modern banking powered by artificial intelligence.
               </p>
-              <div className="pt-4">
+              <div className="pt-2">
                 <Button
                   asChild
                   size="lg"
-                  className="bg-white text-bank hover:bg-bank-accent/80 font-medium"
+                  className="bg-white text-bank hover:bg-bank-accent/80 font-medium transition-colors"
                 >
                   <Link to={isAuthenticated ? "/dashboard" : "/login"}>
                     {isAuthenticated ? "Go to Dashboard" : "Get Started"}
@@ -38,30 +53,30 @@ const Index = () => {
             </div>
             <div className="md:w-1/2">
               <div className="relative">
-                <div className="w-full h-64 md:h-96 bg-bank-light/30 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20">
+                <div className="w-full h-56 md:h-80 bg-white/10 rounded-2xl overflow-hidden backdrop-blur-sm border border-white/20 shadow-2xl">
                   <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                    <div className="text-xl font-bold">TestimBank Dashboard</div>
+                    <div className="text-xl font-bold text-white">TestimBank Dashboard</div>
                     <div className="space-y-4">
                       <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                        <div className="flex items-center">
+                        <div className="flex items-center text-white">
                           <CreditCard className="h-5 w-5 mr-2" />
                           <span>Main Account</span>
                         </div>
-                        <div className="font-semibold">$4,250.75</div>
+                        <div className="font-semibold text-white">$4,250.75</div>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                        <div className="flex items-center">
+                        <div className="flex items-center text-white">
                           <PieChart className="h-5 w-5 mr-2" />
                           <span>Savings</span>
                         </div>
-                        <div className="font-semibold">$12,680.50</div>
+                        <div className="font-semibold text-white">$12,680.50</div>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                        <div className="flex items-center">
+                        <div className="flex items-center text-white">
                           <BarChart3 className="h-5 w-5 mr-2" />
                           <span>Investments</span>
                         </div>
-                        <div className="font-semibold">$28,540.25</div>
+                        <div className="font-semibold text-white">$28,540.25</div>
                       </div>
                     </div>
                   </div>
@@ -73,38 +88,28 @@ const Index = () => {
       </header>
 
       {/* Features Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Banking Made Intelligent</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              TestimBank brings together cutting-edge AI technology with traditional banking services to provide you with a seamless experience.
+            <h2 className="text-3xl font-bold mb-4">Why Choose TestimBank?</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Experience banking like never before with our cutting-edge features and AI-powered solutions.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bank-card">
-              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bank-card group hover:shadow-xl transition-all duration-300">
+              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6 group-hover:bg-bank group-hover:text-white transition-colors">
                 <Shield className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Secure Banking</h3>
               <p className="text-muted-foreground">
-                State-of-the-art security with biometric authentication and real-time fraud detection.
+                Advanced security measures to protect your financial information.
               </p>
             </div>
             
-            <div className="bank-card">
-              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6">
-                <CreditCard className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Smart Cards</h3>
-              <p className="text-muted-foreground">
-                Credit and debit cards with AI-powered spending insights and instant notifications.
-              </p>
-            </div>
-            
-            <div className="bank-card">
-              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6">
+            <div className="bank-card group hover:shadow-xl transition-all duration-300">
+              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6 group-hover:bg-bank group-hover:text-white transition-colors">
                 <PieChart className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Investment Tools</h3>
@@ -113,8 +118,8 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bank-card">
-              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6">
+            <div className="bank-card group hover:shadow-xl transition-all duration-300">
+              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6 group-hover:bg-bank group-hover:text-white transition-colors">
                 <Lock className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Home Mortgages</h3>
@@ -123,18 +128,8 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bank-card">
-              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6">
-                <BarChart3 className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Financial Insights</h3>
-              <p className="text-muted-foreground">
-                Deep analysis of your spending patterns to help you save more effectively.
-              </p>
-            </div>
-            
-            <div className="bank-card">
-              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6">
+            <div className="bank-card group hover:shadow-xl transition-all duration-300">
+              <div className="rounded-full w-12 h-12 flex items-center justify-center bg-bank/10 text-bank mb-6 group-hover:bg-bank group-hover:text-white transition-colors">
                 <Smartphone className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold mb-2">Mobile Banking</h3>
@@ -147,16 +142,16 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-muted py-20 px-6">
+      <section className="py-20 px-6 bg-bank text-white">
         <div className="container mx-auto max-w-6xl text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Banking Experience?</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-bank-accent/90 max-w-2xl mx-auto mb-8">
             Join thousands of satisfied customers who have made the switch to intelligent banking with TestimBank.
           </p>
           <Button
             asChild
             size="lg"
-            className="bg-bank hover:bg-bank-dark"
+            className="bg-white text-bank hover:bg-bank-accent/80 font-medium transition-colors"
           >
             <Link to={isAuthenticated ? "/dashboard" : "/register"}>
               {isAuthenticated ? "Go to Dashboard" : "Open an Account"}
@@ -179,9 +174,9 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link to="/" className="text-bank-accent/80 hover:text-bank-accent">Home</Link></li>
-                <li><Link to="/login" className="text-bank-accent/80 hover:text-bank-accent">Sign In</Link></li>
-                <li><Link to="/register" className="text-bank-accent/80 hover:text-bank-accent">Register</Link></li>
+                <li><Link to="/" className="text-bank-accent/80 hover:text-bank-accent transition-colors">Home</Link></li>
+                <li><Link to="/login" className="text-bank-accent/80 hover:text-bank-accent transition-colors">Sign In</Link></li>
+                <li><Link to="/register" className="text-bank-accent/80 hover:text-bank-accent transition-colors">Register</Link></li>
               </ul>
             </div>
             <div>
