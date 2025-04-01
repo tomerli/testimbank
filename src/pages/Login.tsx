@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { InfoIcon } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,8 +19,8 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password) {
-      toast.error("Please fill in all fields");
+    if (!email) {
+      toast.error("Please enter an email address");
       return;
     }
     
@@ -49,6 +51,13 @@ const Login = () => {
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
+              <Alert className="bg-muted border-bank/20">
+                <InfoIcon className="h-4 w-4 text-bank" />
+                <AlertDescription className="text-sm text-muted-foreground">
+                  This is a demo app. You can log in with any email and password.
+                </AlertDescription>
+              </Alert>
+              
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium">Email</label>
                 <Input
@@ -73,7 +82,6 @@ const Login = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
               </div>
             </CardContent>
@@ -92,7 +100,7 @@ const Login = () => {
                 </Link>
               </p>
               <div className="text-xs text-center text-muted-foreground">
-                <p>Demo accounts:</p>
+                <p>Demo accounts (optional):</p>
                 <p>Email: john@example.com or jane@example.com</p>
                 <p>Password: any password will work</p>
               </div>

@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { InfoIcon } from "lucide-react";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -20,8 +22,8 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      toast.error("Please fill in all fields");
+    if (!firstName || !lastName || !email) {
+      toast.error("Please fill in all required fields");
       return;
     }
     
@@ -57,9 +59,16 @@ const Register = () => {
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
+              <Alert className="bg-muted border-bank/20">
+                <InfoIcon className="h-4 w-4 text-bank" />
+                <AlertDescription className="text-sm text-muted-foreground">
+                  This is a demo app. Your information will not be stored on any server.
+                </AlertDescription>
+              </Alert>
+              
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label htmlFor="firstName" className="text-sm font-medium">First Name</label>
+                  <label htmlFor="firstName" className="text-sm font-medium">First Name*</label>
                   <Input
                     id="firstName"
                     placeholder="John"
@@ -69,7 +78,7 @@ const Register = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="lastName" className="text-sm font-medium">Last Name</label>
+                  <label htmlFor="lastName" className="text-sm font-medium">Last Name*</label>
                   <Input
                     id="lastName"
                     placeholder="Doe"
@@ -80,7 +89,7 @@ const Register = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">Email</label>
+                <label htmlFor="email" className="text-sm font-medium">Email*</label>
                 <Input
                   id="email"
                   type="email"
@@ -98,7 +107,6 @@ const Register = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
               </div>
               <div className="space-y-2">
@@ -109,7 +117,6 @@ const Register = () => {
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
                 />
               </div>
             </CardContent>

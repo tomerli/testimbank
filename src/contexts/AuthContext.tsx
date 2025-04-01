@@ -69,20 +69,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Find user by email
-      const foundUser = USERS.find(u => u.email === email);
+      // Find user by email in sample data
+      let foundUser = USERS.find(u => u.email.toLowerCase() === email.toLowerCase());
       
+      // If user not found in sample data, create a dynamic user (demo mode)
       if (!foundUser) {
-        throw new Error("Invalid credentials");
+        // Extract name parts from email or use defaults
+        const nameParts = email.split('@')[0].split('.');
+        const firstName = nameParts[0] ? 
+          nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : 
+          "Demo";
+        const lastName = nameParts[1] ? 
+          nameParts[1].charAt(0).toUpperCase() + nameParts[1].slice(1) : 
+          "User";
+        
+        foundUser = {
+          id: Math.random().toString(36).substr(2, 9),
+          firstName,
+          lastName,
+          email,
+        };
       }
-      
-      // In a real app, we would verify password here
       
       // Set user in state and localStorage
       setUser(foundUser);
       localStorage.setItem("user", JSON.stringify(foundUser));
       
-      toast.success(`Welcome back, ${foundUser.firstName}!`);
+      toast.success(`Welcome to TestimBank, ${foundUser.firstName}!`);
     } catch (error) {
       toast.error("Login failed: " + (error instanceof Error ? error.message : "Unknown error"));
       throw error;
@@ -99,14 +112,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check if email already exists
-      if (USERS.some(u => u.email === email)) {
+      // Check if email already exists in demo users
+      if (USERS.some(u => u.email.toLowerCase() === email.toLowerCase())) {
         throw new Error("Email already in use");
       }
       
       // Create new user
       const newUser: User = {
-        id: (USERS.length + 1).toString(),
+        id: Math.random().toString(36).substr(2, 9),
         firstName,
         lastName,
         email,
