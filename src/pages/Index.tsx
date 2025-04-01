@@ -23,7 +23,7 @@ const Index = () => {
               <p className="text-lg md:text-xl text-bank-accent/90">
                 Intelligent solutions for your financial needs. Modern banking powered by artificial intelligence.
               </p>
-              <div className="pt-4 flex flex-col sm:flex-row gap-4">
+              <div className="pt-4">
                 <Button
                   asChild
                   size="lg"
@@ -34,16 +34,6 @@ const Index = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                {!isAuthenticated && (
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="border-white text-white hover:bg-white/10 font-medium"
-                  >
-                    <Link to="/login">Sign In</Link>
-                  </Button>
-                )}
               </div>
             </div>
             <div className="md:w-1/2">
