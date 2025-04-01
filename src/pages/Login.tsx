@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -51,13 +49,6 @@ const Login = () => {
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
-              <Alert className="bg-muted border-bank/20">
-                <InfoIcon className="h-4 w-4 text-bank" />
-                <AlertDescription className="text-sm text-muted-foreground">
-                  This is a demo app. You can log in with any email and password.
-                </AlertDescription>
-              </Alert>
-              
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium">Email</label>
                 <Input
