@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -28,7 +27,7 @@ const Index = () => {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-white text-bank hover:bg-bank-accent"
+                  className="bg-white text-bank hover:bg-bank-accent/80 font-medium"
                 >
                   <Link to={isAuthenticated ? "/dashboard" : "/login"}>
                     {isAuthenticated ? "Go to Dashboard" : "Get Started"}
@@ -40,7 +39,7 @@ const Index = () => {
                     asChild
                     variant="outline"
                     size="lg"
-                    className="border-white text-white hover:bg-white/10"
+                    className="border-white text-white hover:bg-white/10 font-medium"
                   >
                     <Link to="/login">Sign In</Link>
                   </Button>

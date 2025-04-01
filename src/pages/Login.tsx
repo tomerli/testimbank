@@ -80,7 +80,7 @@ const Login = () => {
             <CardFooter className="flex flex-col space-y-4">
               <Button
                 type="submit"
-                className="w-full bg-bank hover:bg-bank-dark"
+                className="w-full bg-primary text-white font-medium hover:bg-primary/90"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Signing in..." : "Sign in"}

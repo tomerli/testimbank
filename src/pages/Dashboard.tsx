@@ -1,10 +1,9 @@
-
 import React from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useBanking } from "@/contexts/BankingContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDown, ArrowUp, CreditCard, Wallet, BarChart3, PiggyBank } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, cn } from "@/lib/utils";
 
 const Dashboard = () => {
   const { user } = useAuth();
