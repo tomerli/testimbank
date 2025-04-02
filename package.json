@@ -7,9 +7,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && npm run --openssl-legacy-provider start",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && npm run build",
-    "eject": "react-scripts eject"
+    "build": "npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
